@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>Keyline — API keys, beautifully managed</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+    <main class="shell">
+      <nav class="topbar">
+        <a class="brand" href="/" aria-label="Keyline home"><span class="brand-mark">⌁</span>Keyline</a>
+        <div class="nav-actions"><span id="user-email" class="user-email"></span><button id="sign-out" class="text-button hidden">Sign out</button></div>
+      </nav>
+
+      <section id="welcome" class="welcome">
+        <p class="eyebrow">API KEY MANAGEMENT</p>
+        <h1>Security, made<br><span>quietly simple.</span></h1>
+        <p class="lead">Create, secure, and understand every API key your products depend on.</p>
+        <div class="auth-card" id="auth-card">
+          <div class="auth-tabs"><button class="tab active" data-mode="login">Sign in</button><button class="tab" data-mode="register">Create account</button></div>
+          <form id="auth-form">
+            <label>Email<input id="email" type="email" autocomplete="email" placeholder="you@company.com" required /></label>
+            <label>Password<input id="password" type="password" autocomplete="current-password" placeholder="At least 10 characters" minlength="10" required /></label>
+            <button class="primary wide" type="submit">Continue <span>→</span></button>
+          </form>
+          <p id="auth-error" class="form-message" role="alert"></p>
+        </div>
+      </section>
+
+      <section id="dashboard" class="dashboard hidden">
+        <header class="dashboard-head"><div><p class="eyebrow">WORKSPACE</p><h1>Good morning.</h1><p class="subtle">Everything is calm. Your keys are under control.</p></div><button id="new-app" class="primary">New application <span>+</span></button></header>
+        <div class="metrics">
+          <article><span>Applications</span><strong id="app-count">0</strong><small>Across your workspace</small></article>
+          <article><span>API keys</span><strong id="key-count">0</strong><small>Active and inactive</small></article>
+          <article><span>Requests</span><strong id="request-count">—</strong><small>For selected application</small></article>
+        </div>
+        <div class="workspace-grid">
+          <section class="panel applications-panel"><div class="panel-title"><h2>Applications</h2><span id="app-label">0 total</span></div><div id="applications" class="application-list"></div></section>
+          <section class="panel details-panel"><div id="empty-state" class="empty-state"><div class="empty-orb">⌁</div><h2>Choose an application</h2><p>Select an application to manage the keys that power it.</p></div>
+            <div id="app-details" class="hidden"><div class="detail-title"><div><p class="eyebrow">APPLICATION</p><h2 id="selected-name"></h2><p id="selected-description" class="subtle"></p></div><button id="new-key" class="soft-button">Create key</button></div><div class="key-heading"><h3>API keys</h3><span id="keys-total"></span></div><div id="keys" class="key-list"></div></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="app-dialog"><form id="app-form" method="dialog"><button class="close" value="cancel" aria-label="Close">×</button><p class="eyebrow">NEW APPLICATION</p><h2>Give it a home.</h2><label>Name<input id="app-name" placeholder="Production API" required maxlength="120" /></label><label>Description <span class="optional">optional</span><textarea id="app-description" placeholder="What will this application do?"></textarea></label><button class="primary wide" value="default">Create application</button><p id="app-error" class="form-message"></p></form></dialog>
+    <dialog id="key-dialog"><form id="key-form" method="dialog"><button class="close" value="cancel" aria-label="Close">×</button><p class="eyebrow">NEW API KEY</p><h2>A key, for one purpose.</h2><label>Name<input id="key-name" placeholder="Production server" required maxlength="120" /></label><label>Expires <span class="optional">optional</span><input id="key-expires" type="datetime-local" /></label><button class="primary wide" value="default">Create key</button><p id="key-error" class="form-message"></p></form></dialog>
+    <dialog id="secret-dialog"><form method="dialog"><p class="eyebrow">COPY THIS NOW</p><h2>Your new key.</h2><p class="subtle">For your security, this is the only time we'll show it.</p><div class="secret"><code id="secret-value"></code><button id="copy-key" class="copy" type="button">Copy</button></div><button class="primary wide" value="default">I saved it safely</button></form></dialog>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="/assets/app.js"></script>
+  </body>
+</html>
