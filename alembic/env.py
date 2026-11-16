@@ -13,14 +13,14 @@ import app.db.base  # noqa: F401
 config = context.config
 database_url = get_settings().database_url
 
-print("DATABASE_URL diagnostics:")
-print(f"  Present: {bool(database_url)}")
-print(f"  Length: {len(database_url)}")
-print(
-    f"  Scheme: {database_url.split(':', 1)[0] if database_url else 'EMPTY'}"
-)
+
 
 config.set_main_option("sqlalchemy.url", database_url)
+
+if config.config_file_name:
+    fileConfig(config.config_file_name)
+
+target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
     context.configure(url=config.get_main_option("sqlalchemy.url"), target_metadata=target_metadata, literal_binds=True, dialect_opts={"paramstyle": "named"})
