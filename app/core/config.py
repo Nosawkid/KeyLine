@@ -38,6 +38,17 @@ class Settings(BaseSettings):
             )
 
         return value
+    
+    @field_validator("redis_url")
+    @classmethod
+    def validate_redis_url(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("REDIS_URL is missing or empty")
+
+        if not value.startswith(("redis://", "rediss://", "unix://")):
+            raise ValueError("REDIS_URL must start with redis://, rediss://, or unix://")
+
+        return value
 
 
 @lru_cache
