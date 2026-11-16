@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -20,6 +20,24 @@ class Settings(BaseSettings):
     @property
     def cors_origin_list(self) -> list[str]:
         return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
+    
+    @field_validator("database_url")
+    @classmethod
+    def normalize_database_url(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("DATABASE_URL is missing")
+
+        if value.startswith("postgres://"):
+            value = value.replace("postgres://", "postgresql://", 1)
+
+        if value.startswith("postgresql://"):
+            value = value.replace(
+                "postgresql://",
+                "postgresql+asyncpg://",
+                1
+            )
+
+        return value
 
 
 @lru_cache
